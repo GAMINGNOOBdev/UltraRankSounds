@@ -2,6 +2,12 @@
 This is a mod done in about two days that just plays a sound whenever your style rank increases or decreases.
 Note: The current sounds are made using Microsoft SAM.
 
+# Current features
+- Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)
+- Changing volume (currently not synced to master volume)
+- Enabling, if sounds should be played when the rank decreases
+- Customizable sounds (by replacing the audio files)
+
 # Installation
 Download the zip from the releases and extract it's contents to ULTRAKILL/BepInEx/plugins.
 
