@@ -1,6 +1,11 @@
 # About this mod
-This is a mod done in about two days that just plays a sound whenever your style rank increases or decreases.
-Note: The current sounds are made using Microsoft SAM.
+This is a mod done in about two days that just plays a sound whenever your style rank increases or decreases.\
+**Note**: The current sounds are made using Microsoft SAM.
+
+> **IMPORTANT**\
+> Currently for some reason, mod managers like to extract the audio files OUTSIDE the sounds folder,\
+> so please if you would like to bare with me until i find the issue could you just open sound folder\
+> from the plugin config panel, go up a directory and move all .mp3 files into the sound folder, thanks.
 
 # Current features
 - Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)
