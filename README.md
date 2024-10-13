@@ -1,16 +1,11 @@
 # About this mod
 This is a mod done in about two days that just plays a sound whenever your style rank increases or decreases.\
+If you have any suggestions, make an issue in the github repo.\
 **Note**: The current sounds are made using Microsoft SAM.
-
-> **IMPORTANT**\
-> Currently for some reason, mod managers like to extract the audio files OUTSIDE the sounds folder,\
-> so for now the sounds directory may now exist which may make the mod folder kinda messy.\
-> Baranium Entertainment is sorry for the inconvenience and wishes that you wish us the best of luck\
-> with fixing this issue.
 
 # Current features
 - Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)
-- Changing volume (currently not synced to master volume)
+- Changing announcer volume (will not be synced to master volume)
 - Enabling, if sounds should be played when the rank decreases
 - Customizable sounds (by replacing the audio files)
 
