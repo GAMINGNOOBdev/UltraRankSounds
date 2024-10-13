@@ -4,8 +4,9 @@ This is a mod done in about two days that just plays a sound whenever your style
 
 > **IMPORTANT**\
 > Currently for some reason, mod managers like to extract the audio files OUTSIDE the sounds folder,\
-> so please if you would like to bare with me until i find the issue could you just open sound folder\
-> from the plugin config panel, go up a directory and move all .mp3 files into the sound folder, thanks.
+> so for now the sounds directory may now exist which may make the mod folder kinda messy.\
+> Baranium Entertainment is sorry for the inconvenience and wishes that you wish us the best of luck\
+> with fixing this issue.
 
 # Current features
 - Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)

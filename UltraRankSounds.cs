@@ -17,7 +17,8 @@ namespace UltraRankSounds
     [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
     public class UltraRankSounds : BaseUnityPlugin
     {
-        public static string DefaultSoundFolder = $"{Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "sounds")}";
+        public static string DefaultSoundParentFolder = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
+        public static string DefaultSoundFolder = $"{Path.Combine(DefaultSoundParentFolder!, "sounds")}";
 
         public static string DestructiveSound   = $"{Path.Combine(DefaultSoundFolder!, "D.mp3")}";
         public static string ChaoticSound       = $"{Path.Combine(DefaultSoundFolder!, "C.mp3")}";
@@ -75,6 +76,21 @@ namespace UltraRankSounds
         {
             if (!Directory.Exists(DefaultSoundFolder))
                 Directory.CreateDirectory(DefaultSoundFolder);
+
+            if (!File.Exists(DestructiveSound)) // probably the stupidity of the mod manager, great zip extraction
+            {
+                // no i will not check every single file because if the mod manager did it for one file...
+                // it will do it for the others as well
+
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "D.mp3")}", DestructiveSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "C.mp3")}", ChaoticSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "B.mp3")}", BrutalSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "A.mp3")}", AnarchicSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "S.mp3")}", SupremeSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "SS.mp3")}", SSadisticSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "SSS.mp3")}", SSShitstormSound);
+                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "ULTR.mp3")}", ULTRAKILLSound);
+            }
 
             InitConfig();
 
