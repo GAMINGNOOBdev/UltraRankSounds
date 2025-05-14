@@ -16,12 +16,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <!--<ULTRAKILLPath>C:\Program Files (x86)\Steam\steamapps\common\ULTRAKILL</ULTRAKILLPath>-->
-        <ULTRAKILLPath>/home/mebe/.local/share/Steam/steamapps/common/ULTRAKILL</ULTRAKILLPath>
-        <ManagedDir>$(ULTRAKILLPath)/ULTRAKILL_Data/Managed/</ManagedDir>
-        <BepInExRootDir>$(ULTRAKILLPath)/BepInEx/</BepInExRootDir>
-        <BepInExCoreDir>$(BepInExRootDir)/core/</BepInExCoreDir>
-        <BepInExPluginsDir>$(BepInExRootDir)/plugins/</BepInExPluginsDir>
+        <ULTRAKILLPath>C:\Program Files (x86)\Steam\steamapps\common\ULTRAKILL</ULTRAKILLPath>
+        <ManagedDir>$(ULTRAKILLPath)\ULTRAKILL_Data\Managed\</ManagedDir>
+        <BepInExRootDir>$(ULTRAKILLPath)\BepInEx\</BepInExRootDir>
+        <BepInExCoreDir>$(BepInExRootDir)\core\</BepInExCoreDir>
+        <BepInExPluginsDir>$(BepInExRootDir)\plugins\</BepInExPluginsDir>
     </PropertyGroup>
 
     <ItemGroup>
