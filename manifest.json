@@ -1,0 +1,7 @@
+{
+    "name": "UltraRankSounds",
+    "description": "An ULTRAKILL mod that plays a sound whenever the style rank in-/decreases",
+    "version_number": "1.1.0",
+    "dependencies": [ "EternalsTeam-PluginConfigurator-1.10.2" ],
+    "website_url": "https://github.com/GAMINGNOOBdev/UltraRankSounds"
+}

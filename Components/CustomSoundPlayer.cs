@@ -39,13 +39,14 @@ namespace UltraRankSounds.Components
 
             if (!File.Exists(file))
             {
-                Debug.LogError($"Could not find audio file '{file}'");
+                UltraRankSounds.Log($"Could not find audio file '{file}'", true);
                 return;
             }
 
             soundPath = file;
             gameObject.SetActive(true);
             StartCoroutine(PlaySoundRoutine());
+            UltraRankSounds.Log($"Playing sound file '{file}'");
         }
 
         private IEnumerator PlaySoundRoutine()

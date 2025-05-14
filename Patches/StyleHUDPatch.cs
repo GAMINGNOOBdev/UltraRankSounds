@@ -8,7 +8,8 @@ namespace UltraRankSounds.Patches
     [HarmonyPatch(typeof(StyleHUD))]
     public class StyleHUDPatch
     {
-        private static CustomSoundPlayer customSoundPlayer;
+        private static CustomSoundPlayer customSoundPlayer = null;
+        private static int lastRankIndex = 0;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(StyleHUD), "Start")]
@@ -21,7 +22,7 @@ namespace UltraRankSounds.Patches
         [HarmonyPatch(typeof(StyleHUD), "ComboStart")]
         public static void StyleHUD_ComboStart_Postfix()
         {
-            PlaySoundForRank(0, "destructive (hooraaay!!!)");
+            PlaySoundForRank(0, "RankD");
         }
 
         [HarmonyPostfix]
@@ -32,6 +33,7 @@ namespace UltraRankSounds.Patches
             string rankName = __instance.currentRank.sprite.name;
 
             PlaySoundForRank(rankIndex, rankName);
+            lastRankIndex = rankIndex;
         }
 
         [HarmonyPostfix]
@@ -44,48 +46,32 @@ namespace UltraRankSounds.Patches
             int rankIndex = __instance.rankIndex;
             string rankName = __instance.currentRank.sprite.name;
 
-            PlaySoundForRank(rankIndex, rankName);
+            UltraRankSounds.Log($"style rank [index: {rankIndex} oldindex: {lastRankIndex}] | name '{rankName}'");
+
+            PlaySoundForRank(rankIndex, rankName, false);
+            lastRankIndex = rankIndex;
         }
 
         private static void PlaySoundForRank(int index, string name, bool ascended = true)
         {
-            if (!UltraRankSounds.EnableSounds.value)
+            if (!UltraRankSounds.EnableSounds.value && customSoundPlayer != null)
                 return;
 
-            string soundFile = GetSoundPathForRankIndex(index);
+            string soundFile = GetSoundPathForRankIndex(index, ascended);
             string status = ascended ? "ascended" : "descended";
 
-            Debug.Log($"{status} style rank to {name} [index: {index}] | playing sound {soundFile}");
+            UltraRankSounds.Log($"{status} style rank to '{name}' [index: {index} oldindex: {lastRankIndex}] | playing sound '{soundFile}'");
             customSoundPlayer.PlaySound(soundFile);
         }
 
-        private static string GetSoundPathForRankIndex(int rank)
+        private static string GetSoundPathForRankIndex(int rank, bool ascended)
         {
-            if (rank == 0)
-                return UltraRankSounds.DestructiveSound;
+            int r = rank;
 
-            if (rank == 1)
-                return UltraRankSounds.ChaoticSound;
+            if (ascended)
+                return SoundsConfig.GetAscensionRankSoundName(r);
 
-            if (rank == 2)
-                return UltraRankSounds.BrutalSound;
-
-            if (rank == 3)
-                return UltraRankSounds.AnarchicSound;
-
-            if (rank == 4)
-                return UltraRankSounds.SupremeSound;
-
-            if (rank == 5)
-                return UltraRankSounds.SSadisticSound;
-
-            if (rank == 6)
-                return UltraRankSounds.SSShitstormSound;
-
-            if (rank == 7)
-                return UltraRankSounds.ULTRAKILLSound;
-
-            return "";
+            return SoundsConfig.GetDescensionRankSoundName(r);
         }
 
     }

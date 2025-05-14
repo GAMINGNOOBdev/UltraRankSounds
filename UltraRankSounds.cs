@@ -2,13 +2,14 @@
 using BepInEx;
 using System.IO;
 using HarmonyLib;
+using UnityEngine;
 using PluginConfig.API;
 using System.Reflection;
 using PluginConfig.API.Fields;
 using UltraRankSounds.Components;
 using PluginConfig.API.Decorators;
 using PluginConfig.API.Functionals;
-using UnityEngine;
+using BepInEx.Logging;
 
 namespace UltraRankSounds
 {
@@ -17,17 +18,7 @@ namespace UltraRankSounds
     [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
     public class UltraRankSounds : BaseUnityPlugin
     {
-        public static string DefaultSoundParentFolder = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
-        public static string DefaultSoundFolder = $"{Path.Combine(DefaultSoundParentFolder!, "sounds")}";
-
-        public static string DestructiveSound   = $"{Path.Combine(DefaultSoundFolder!, "D.mp3")}";
-        public static string ChaoticSound       = $"{Path.Combine(DefaultSoundFolder!, "C.mp3")}";
-        public static string BrutalSound        = $"{Path.Combine(DefaultSoundFolder!, "B.mp3")}";
-        public static string AnarchicSound      = $"{Path.Combine(DefaultSoundFolder!, "A.mp3")}";
-        public static string SupremeSound       = $"{Path.Combine(DefaultSoundFolder!, "S.mp3")}";
-        public static string SSadisticSound     = $"{Path.Combine(DefaultSoundFolder!, "SS.mp3")}";
-        public static string SSShitstormSound   = $"{Path.Combine(DefaultSoundFolder!, "SSS.mp3")}";
-        public static string ULTRAKILLSound     = $"{Path.Combine(DefaultSoundFolder!, "ULTR.mp3")}";
+        private static ManualLogSource logger;
 
         public static FloatSliderField VolumeSlider;
         public static ButtonField OpenSoundsFolder;
@@ -39,6 +30,7 @@ namespace UltraRankSounds
         private static void InitConfig()
         {
             config = PluginConfigurator.Create(PluginInfo.NAME, PluginInfo.GUID);
+            config.SetIconWithURL("https://raw.githubusercontent.com/GAMINGNOOBdev/UltraRankSounds/refs/heads/master/icon.png");
             new ConfigHeader(config.rootPanel, "Sound settings");
             EnableSounds = new BoolField(config.rootPanel, "Enable rank sounds", "ultraranksounds.enabled", true);
             PlayIfDescended = new BoolField(config.rootPanel, "Play sound when rank descended", "ultraranksounds.playdescended", false);
@@ -69,34 +61,36 @@ namespace UltraRankSounds
 
         private static void OpenDefaultSoundsFolder()
         {
-            Application.OpenURL(new Uri(DefaultSoundFolder).AbsoluteUri);
+            Application.OpenURL(new Uri(SoundsConfig.DefaultSoundFolder).AbsoluteUri);
         }
 
         private void Awake()
         {
-            if (!Directory.Exists(DefaultSoundFolder))
-                Directory.CreateDirectory(DefaultSoundFolder);
-
-            if (!File.Exists(DestructiveSound)) // probably the stupidity of the mod manager, great zip extraction
-            {
-                // no i will not check every single file because if the mod manager did it for one file...
-                // it will do it for the others as well
-
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "D.mp3")}", DestructiveSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "C.mp3")}", ChaoticSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "B.mp3")}", BrutalSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "A.mp3")}", AnarchicSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "S.mp3")}", SupremeSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "SS.mp3")}", SSadisticSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "SSS.mp3")}", SSShitstormSound);
-                File.Move($"{Path.Combine(DefaultSoundParentFolder!, "ULTR.mp3")}", ULTRAKILLSound);
-            }
-
+            logger = Logger;
+            SoundsConfig.EnsureSoundDirectories();
             InitConfig();
 
             Harmony _patcher = new Harmony(PluginInfo.GUID);
             _patcher.PatchAll();
+
+            Log($"Sound parent folder: '{SoundsConfig.DefaultSoundParentFolder}'");
         }
+
+        public static void Log(string message, bool error = false)
+        {
+            if (logger == null)
+                return;
+
+            if (error)
+            {
+                logger.LogError(message);
+                return;
+            }
+
+            logger.LogInfo(message);
+        }
+
+
     }
 
 }
