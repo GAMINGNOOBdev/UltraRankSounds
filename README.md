@@ -7,7 +7,7 @@ If you have any suggestions, make an issue in the github repo.\
 - Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)
 - Changing announcer volume (will not be synced to master volume)
 - Enabling, if sounds should be played when the rank decreases
-- Customizable sounds for both ascension and descension (by replacing the audio files)
+- Customizable sounds for **both ascension and descension** (by replacing the audio files)
 
 # Installation
 There are 2 options:
