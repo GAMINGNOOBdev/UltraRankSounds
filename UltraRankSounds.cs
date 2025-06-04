@@ -90,7 +90,6 @@ namespace UltraRankSounds
             logger.LogInfo(message);
         }
 
-
     }
 
 }

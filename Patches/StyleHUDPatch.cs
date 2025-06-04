@@ -1,6 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 using UltraRankSounds.Components;
+using BepInEx;
 
 namespace UltraRankSounds.Patches
 {
@@ -22,6 +23,9 @@ namespace UltraRankSounds.Patches
         [HarmonyPatch(typeof(StyleHUD), "ComboStart")]
         public static void StyleHUD_ComboStart_Postfix()
         {
+            if (!UltraRankSounds.EnableSounds.value || !UltraRankSounds.PlayIfDescended.value)
+                return;
+
             PlaySoundForRank(0, "RankD");
         }
 
@@ -40,7 +44,7 @@ namespace UltraRankSounds.Patches
         [HarmonyPatch(typeof(StyleHUD), "DescendRank")]
         public static void StyleHUD_DescendRank_Postfix(bool ___comboActive, StyleHUD __instance)
         {
-            if (!UltraRankSounds.PlayIfDescended.value || !___comboActive)
+            if (!UltraRankSounds.EnableSounds.value || !UltraRankSounds.PlayIfDescended.value || !___comboActive)
                 return;
 
             int rankIndex = __instance.rankIndex;
@@ -54,7 +58,7 @@ namespace UltraRankSounds.Patches
 
         private static void PlaySoundForRank(int index, string name, bool ascended = true)
         {
-            if (!UltraRankSounds.EnableSounds.value && customSoundPlayer != null)
+            if (!UltraRankSounds.EnableSounds.value || customSoundPlayer == null)
                 return;
 
             string soundFile = GetSoundPathForRankIndex(index, ascended);

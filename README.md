@@ -16,7 +16,7 @@ If you have any suggestions, make an issue in the github repo.\
 ## Installation
 There are 2 options:
 1. Install using any mod manager like r2modman or thunderstore mod manager.
-2. Download the zip from the releases and extract it's contents to `ULTRAKILL/BepInEx/plugins`.
+2. Download the zip from the releases and extract it's `plugins` folder to `ULTRAKILL/BepInEx/`.
 
 ## Customizing sounds
 To customize sounds, open the `UltraRankSounds` panel in the plugin configs. \
