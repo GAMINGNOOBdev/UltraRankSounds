@@ -22,6 +22,8 @@ namespace UltraRankSounds
 
         public static FloatSliderField VolumeSlider;
         public static ButtonField OpenSoundsFolder;
+        public static ButtonField UpdateSoundFiles;
+        public static BoolField PlaySoundsInAlphabeticOrder;
         public static BoolField PlayIfDescended;
         public static BoolField EnableSounds;
 
@@ -34,14 +36,17 @@ namespace UltraRankSounds
             new ConfigHeader(config.rootPanel, "Sound settings");
             EnableSounds = new BoolField(config.rootPanel, "Enable rank sounds", "ultraranksounds.enabled", true);
             PlayIfDescended = new BoolField(config.rootPanel, "Play sound when rank descended", "ultraranksounds.playdescended", false);
+            PlaySoundsInAlphabeticOrder = new BoolField(config.rootPanel, "Play sounds in alpabetical order", "ultraranksounds.playinalphabeticorder", false);
 
             VolumeSlider = new FloatSliderField(config.rootPanel, "Volume", "ultraranksounds.volume", new Tuple<float, float>(0.0f, 1.0f), 1.0f, 2);
 
             new ConfigHeader(config.rootPanel, "Sound files");
             OpenSoundsFolder = new ButtonField(config.rootPanel, "Open sounds folder", "ultraranksounds.opensoundsfolder");
+            UpdateSoundFiles = new ButtonField(config.rootPanel, "Update sound files", "ultraranksounds.updatesoundfiles");
 
             EnableSounds.onValueChange += ChangedModStatus;
             VolumeSlider.onValueChange += VolumeChanged;
+            UpdateSoundFiles.onClick += SoundsConfig.UpdateSoundEntries;
             OpenSoundsFolder.onClick += OpenDefaultSoundsFolder;
 
             EnableSounds.TriggerValueChangeEvent();
@@ -67,7 +72,7 @@ namespace UltraRankSounds
         private void Awake()
         {
             logger = Logger;
-            SoundsConfig.EnsureSoundDirectories();
+            SoundsConfig.UpdateSoundEntries();
             InitConfig();
 
             Harmony _patcher = new Harmony(PluginInfo.GUID);

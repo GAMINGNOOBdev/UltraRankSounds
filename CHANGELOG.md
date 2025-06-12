@@ -12,3 +12,9 @@ All changes will be noted in this file from now on.
 
 ### Fixes
 - Fixed rank descension sound playing even if sounds are disabled
+
+## v1.0.4
+
+### Added
+- Added support for .wav, .flac and .ogg files
+- Support for multiple variations for just one style rank

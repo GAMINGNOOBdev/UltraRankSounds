@@ -51,7 +51,7 @@ namespace UltraRankSounds.Components
 
         private IEnumerator PlaySoundRoutine()
         {
-            WaitUntil songFinished = new(() => Application.isFocused && !source.isPlaying);
+            WaitUntil soundFinished = new(() => Application.isFocused && !source.isPlaying);
 
             FileInfo fileInfo = new(soundPath);
             AudioType audioType = CustomMusicFileBrowser.extensionTypeDict[fileInfo.Extension.ToLower()];
@@ -65,9 +65,9 @@ namespace UltraRankSounds.Components
             source.clip = handler.audioClip;
             source.volume = soundVolume;
             source.Play();
-            yield return songFinished;
+            yield return soundFinished;
             gameObject.SetActive(false);
-            UnityEngine.Object.Destroy(handler.audioClip);
+            Destroy(handler.audioClip);
         }
         
     }
