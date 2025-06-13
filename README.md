@@ -1,6 +1,8 @@
 # UltraRankSounds
 This is a mod that plays a sound whenever your style rank increases or decreases.\
-If you have any suggestions, make an issue in the github repo.\
+If you have any suggestions, make an issue in the github repo or join the \
+[discord server](https://discord.com/invite/8R5YyM3MEn) and send suggestions \
+in the `#ultraranksounds-suggestions` channel.
 **Note**: The current sounds are made using Microsoft SAM.
 
 ## Current features
