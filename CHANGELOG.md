@@ -18,3 +18,10 @@ All changes will be noted in this file from now on.
 ### Added
 - Added support for .wav, .flac and .ogg files
 - Support for multiple variations for just one style rank
+
+## v1.0.5
+
+### Added
+- Added "sound packs" and settings to select them
+- Sounds for style point bonuses
+- More volume options

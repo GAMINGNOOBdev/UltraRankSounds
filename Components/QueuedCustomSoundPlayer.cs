@@ -4,22 +4,30 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 
 namespace UltraRankSounds.Components
 {
 
-    public class CustomSoundPlayer : MonoBehaviour
+    public class QueuedCustomSoundPlayer : MonoBehaviour
     {
-        private static readonly List<CustomSoundPlayer> instances = [];
+        private static readonly List<QueuedCustomSoundPlayer> instances = [];
         public static void SetSoundVolumes(float volume)
         {
-            foreach (CustomSoundPlayer csp in instances)
+            foreach (QueuedCustomSoundPlayer csp in instances)
                 csp.SetSoundVolume(volume);
         }
 
-        public AudioSource source;
+        public static void ClearAllSounds()
+        {
+            foreach (QueuedCustomSoundPlayer csp in instances)
+                csp.sounds.Clear();
+        }
+
+        private readonly ConcurrentQueue<string> sounds = [];
+        private AudioSource source;
         private float soundVolume;
-        private string soundPath;
 
         private void Start()
         {
@@ -29,12 +37,23 @@ namespace UltraRankSounds.Components
             UltraRankSounds.MasterVolumeSlider.TriggerValueChangeEvent();
         }
 
+        private void FixedUpdate()
+        {
+            if (source.isPlaying)
+                return;
+            
+            if (sounds.IsEmpty)
+                return;
+
+            StartCoroutine(PlaySoundRoutine());
+        }
+
         public void SetSoundVolume(float volume)
         {
             soundVolume = volume;
         }
 
-        public void PlaySound(string file)
+        public void QueueSound(string file)
         {
             if (string.IsNullOrEmpty(file))
                 return;
@@ -45,13 +64,20 @@ namespace UltraRankSounds.Components
                 return;
             }
 
-            soundPath = file;
+            sounds.Enqueue(file);
             gameObject.SetActive(true);
-            StartCoroutine(PlaySoundRoutine());
+            List<string> snds = [];
+            foreach (var snd in sounds)
+                snds.Add(Path.GetFileNameWithoutExtension(snd));
+            UltraRankSounds.Log(string.Join(",", snds));
         }
 
         private IEnumerator PlaySoundRoutine()
         {
+            string soundPath = null;
+            while (!sounds.TryDequeue(out soundPath) && !sounds.IsEmpty);
+            if (soundPath == null)
+                yield break;
             WaitUntil soundFinished = new(() => Application.isFocused && !source.isPlaying);
 
             FileInfo fileInfo = new(soundPath);
@@ -67,10 +93,9 @@ namespace UltraRankSounds.Components
             source.volume = soundVolume;
             source.Play();
             yield return soundFinished;
-            gameObject.SetActive(false);
             Destroy(handler.audioClip);
         }
-        
+
     }
 
 }
