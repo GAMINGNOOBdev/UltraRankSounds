@@ -25,3 +25,8 @@ All changes will be noted in this file from now on.
 - Added "sound packs" and settings to select them
 - Sounds for style point bonuses
 - More volume options
+
+## v1.0.5
+
+### Fixes
+- Removed unnecessary zip extract/compression code

@@ -74,12 +74,4 @@ public class SoundPack
         UltraRankSounds.Log($"Registered style bonuses '{string.Join(",", [.. styleBonuses.Keys.ToArray()])}'");
     }
 
-    public void Install(string zipPath)
-    {
-        Directory.CreateDirectory(StyleRanksFolder);
-        Directory.CreateDirectory(StyleBonusesFolder);
-        ZipFile.ExtractToDirectory(zipPath, StyleRanksFolder, true);
-    }
-
-    public void Export(string zipPath) => ZipFile.CreateFromDirectory(StyleRanksFolder, zipPath, CompressionLevel.NoCompression, false);
 }

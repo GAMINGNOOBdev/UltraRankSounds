@@ -68,13 +68,6 @@ public class SoundConfig
         UltraRankSounds.Log($"Changed sound pack to '{name}'");
     }
 
-    public static void InstallSoundPack(string path)
-    {
-        string packName = Path.GetFileNameWithoutExtension(path);
-        SoundPack sp = new($"{Path.Combine(defaultSoundPacksFolder!, packName)}");
-        sp.Install(path);
-    }
-
     public static string GetPointBonusSound(string id) => CurrentSoundPack.GetPointBonusSound(id);
 
     public static string GetAscensionRankSoundName(int rank) => CurrentSoundPack.GetAscensionRankSoundName(rank);
