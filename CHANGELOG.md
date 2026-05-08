@@ -26,7 +26,12 @@ All changes will be noted in this file from now on.
 - Sounds for style point bonuses
 - More volume options
 
-## v1.0.5
+## v1.0.6
 
 ### Fixes
 - Removed unnecessary zip extract/compression code
+
+## v1.0.7
+
+### Added
+- Extended the range for volumes from 0-100% to 0%-1000%

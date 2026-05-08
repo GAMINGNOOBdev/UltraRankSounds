@@ -25,7 +25,7 @@ namespace UltraRankSounds.Components
         {
             instances.Add(this);
             source = gameObject.AddComponent<AudioSource>();
-            SetSoundVolumes(1);
+            SetSoundVolume(1);
             UltraRankSounds.MasterVolumeSlider.TriggerValueChangeEvent();
         }
 
@@ -63,9 +63,7 @@ namespace UltraRankSounds.Components
             request.SendWebRequest();
             yield return request;
 
-            source.clip = handler.audioClip;
-            source.volume = soundVolume;
-            source.Play();
+            source.PlayOneShot(handler.audioClip, soundVolume);
             yield return soundFinished;
             gameObject.SetActive(false);
             Destroy(handler.audioClip);

@@ -20,6 +20,8 @@ namespace UltraRankSounds
     [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
     public class UltraRankSounds : BaseUnityPlugin
     {
+        private const float MAX_AUDIO_VOLUME = 10.0f;
+    
         private static readonly Dictionary<string,string> currentAvailableStylePointBonuses = [];
         private static PluginConfigurator config;
         private static ManualLogSource logger;
@@ -41,13 +43,14 @@ namespace UltraRankSounds
             PlayIfDescended = new(config.rootPanel, "Play sound when rank descended", "ultraranksounds.playdescended", true);
             PlaySoundsInLoadedOrder = new(config.rootPanel, "Play sounds in loaded order", "ultraranksounds.playinloadedorder", false);
             EnableStyleBonusSounds = new(config.rootPanel, "Enable sounds for style bonuses", "ultraranksounds.playsoundsforstylebonuses", false);
+
             List<string> soundPacks = ["default"];
             foreach (string i in Management.SoundConfig.SoundPacks.Keys)
                 soundPacks.Add(i);
             CurrentSoundPack = new(config.rootPanel, "Selected sound pack", "ultraranksounds.currentsoundpack", soundPacks.ToArray(), "default");
-            MasterVolumeSlider = new(config.rootPanel, "Volume", "ultraranksounds.volume", new Tuple<float, float>(0.0f, 1.0f), 1.0f, 2);
-            StyleRankVolumeSlider = new(config.rootPanel, "Style rank volume", "ultraranksounds.stylerankvolume", new Tuple<float, float>(0.0f, 1.0f), 1.0f, 2);
-            StyleBonusVolumeSlider = new(config.rootPanel, "Style bonus volume", "ultraranksounds.stylebonusvolume", new Tuple<float, float>(0.0f, 1.0f), 0.5f, 2);
+            MasterVolumeSlider = new(config.rootPanel, "Volume", "ultraranksounds.volume", new Tuple<float, float>(0.0f, MAX_AUDIO_VOLUME), 1.0f, 2);
+            StyleRankVolumeSlider = new(config.rootPanel, "Style rank volume", "ultraranksounds.stylerankvolume", new Tuple<float, float>(0.0f, MAX_AUDIO_VOLUME), 1.0f, 2);
+            StyleBonusVolumeSlider = new(config.rootPanel, "Style bonus volume", "ultraranksounds.stylebonusvolume", new Tuple<float, float>(0.0f, MAX_AUDIO_VOLUME), 0.5f, 2);
 
             new ConfigHeader(config.rootPanel, "Management");
             OpenSoundPack = new(config.rootPanel, "Open sound pack", "ultraranksounds.opensoundpack");
@@ -112,10 +115,7 @@ namespace UltraRankSounds
             Log($"Sound packs folder: '{Management.SoundConfig.defaultSoundPacksFolder}'");
         }
 
-        public static bool IsStyleBonus(string bonus)
-        {
-            return currentAvailableStylePointBonuses.ContainsKey(bonus);
-        }
+        public static bool IsStyleBonus(string bonus) => currentAvailableStylePointBonuses.ContainsKey(bonus);
 
         public static void RegisterStylePointBonuses(Dictionary<string,string> styleBonusses)
         {

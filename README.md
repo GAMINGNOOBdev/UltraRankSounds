@@ -1,10 +1,12 @@
 # UltraRankSounds
 This is a mod that plays a sound whenever your style rank increases or decreases. \
-If you have any suggestions, make an [issue](https://github.com/GAMINGNOOBdev/UltraRankSounds/issues) in the [github repo](https://github.com/GAMINGNOOBdev/UltraRankSounds) or join the \
+If you have any suggestions, make an [issue](https://github.com/GAMINGNOOBdev/UltraRankSounds/issues) in the [github repo](https://github.com/GAMINGNOOBdev/UltraRankSounds), message me on discord (`__bocchi_chan__`) and/or [twitter](https://twitter.com/gamingnoobdev) or join the \
 [discord server](https://discord.com/invite/8R5YyM3MEn) and send suggestions \
 in the `#ultraranksounds-suggestions` channel.
 > [!NOTE]
 > The current sounds are made using Microsoft SAM.
+
+Feel free to use this mod inside modpacks, but please credit me if you do so.
 
 ## Current features
 - Disabling all sounds (so you can have the mod loaded but disable it in a plugin preset)
@@ -14,6 +16,7 @@ in the `#ultraranksounds-suggestions` channel.
 - Customizable sounds for **both ascension and descension** (by replacing the audio files)
 - Sound pack installation & management
 - Support for `.mp3`, `.ogg`, `.wav` and `.flac`
+- Sound volumes now amplifyable up to 10x volume
 - Customizable sounds for each style bonus (hopefully with support for custom style bonuses (??? unsure))
 
 ## Planned features
